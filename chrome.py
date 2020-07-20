@@ -56,7 +56,7 @@ def joinclass(urlcur):
 			cc.append(pyautogui.locateOnScreen('mutesite.png'))
 			if(cc[4] != None):
 				cc[4]=pyautogui.center(cc[4])
-				pyautogui.center(cc[4])
+				pyautogui.click(cc[4])
 		if(cc[1]!=None):
 			pyautogui.click(cc[1])
 		if(cc[3]!=None):
