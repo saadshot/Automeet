@@ -14,3 +14,7 @@ xp: list of extra parameters to find in window title to get window_id if meetid 
 daystarttime=:	#efines day start time to not have entire program run before start time (default = 08:00)
 dayendtime: when do all classes end, to stop program (default = 17:00)
 ttpath: text file with timetable (default = "\timetable.txt")
+
+LIBRARIES to be installed:
+pyautogui
+pywin32
