@@ -22,7 +22,7 @@ user32 = ctypes.windll.user32
 user32.SetProcessDPIAware()
 
 #wait times for sleep in check loop
-times=[10,20,60,10,900]
+times=[10,20,60,600,900]
 
 #simple exception class
 class MeetException(RuntimeError):
