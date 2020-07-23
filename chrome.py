@@ -259,21 +259,24 @@ def checkloop(tt,dt):
 		time.sleep(times[3])
 		nowd=datetime.now()
 		timet=nowd.time()
-	print("CONGRATULATIONS. YOUR DAY HAS ENDED")
 
 def initialize():
 	nowd=datetime.now()
 	timet=nowd.time()
-	while True:
-		if (timet>ds):
+	f=True
+	while f==True:
+		if (timet>ds and timet<dt):
 			checkloop(p,dt)
+		elif timet<dt :
+			time.sleep(times[4])
 		else:
-			sleep(times[4])
+			print("CONGRATULATIONS. YOUR DAY HAS ENDED")
+			f=False
+
 
 p=gettimetable(ttpath)
 dt=datetime.strptime(dayendtime,"%H:%M")
 ds=datetime.strptime(daystarttime,"%H:%M")
 dt=dt.time()
 ds=ds.time()
-pyautogui.FAILSAFE = True
 initialize()
