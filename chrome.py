@@ -275,5 +275,5 @@ dt=datetime.strptime(dayendtime,"%H:%M")
 ds=datetime.strptime(daystarttime,"%H:%M")
 dt=dt.time()
 ds=ds.time()
-pyautogui.FAILSAFE = False
+pyautogui.FAILSAFE = True
 initialize()
