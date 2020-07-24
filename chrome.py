@@ -12,9 +12,10 @@ import ctypes
 
 add_to_url = "?authuser=2"	#find this parameter in url at meet homepage and set it accordingly
 xp=['CS301']	#extra parameters to find in window title to get window_id
-dayendtime="17:00"	#when do all classes end, to stop program
 ttpath="timetable.txt"	#text file with timetable
 daystarttime="07:59"	#defines day start time to not have entire program run before 08:00AM
+dayendtime="13:50"	#when do all classes end, to stop program
+
 
 '''	gets screen resolution, 
 	used for default position of mouse to not interfere with image recognition'''
@@ -22,7 +23,7 @@ user32 = ctypes.windll.user32
 user32.SetProcessDPIAware()
 
 #wait times for sleep in check loop
-times=[10,20,60,600,900]
+times=[10,20,60,20,900]
 
 #simple exception class
 class MeetException(RuntimeError):
@@ -137,7 +138,7 @@ def endclass(bwindow):
 	
 #uses image recognition and pyautogui to mute mic, turn cam off, mute site and join class
 def joinclass():
-	pyautogui.moveTo(user32.GetSystemMetrics(0),0) #moving cursor out of the way due to image recognition
+	pyautogui.moveTo(user32.GetSystemMetrics(0)/2,0) #moving cursor out of the way due to image recognition
 	cc=[]	#click coordinates
 	cc.append(pyautogui.locateOnScreen('join2.png'))
 	cc.append(pyautogui.locateOnScreen('cam_on.png'))
@@ -218,24 +219,25 @@ def findclasstojoin(tt):
 		return None
 
 #finds class to join, if true then joins class once, leaves when class time ends
+
 def attendclass(tt):
 	curjoin=""
-	end = 0
-	join = 0
+	end = False
+	join = False
 	brow_bwin=None
-	while end == 0:
+	while end == False:
 		c=findclasstojoin(tt)
 		if c!=None and (curjoin == c.link or curjoin == ""):
-			if join == 0:
+			if join == False:
 				notif.display_window()
 				brow_bwin=startclass(c)
 				joinclass()
-				join=1
+				join=True
 				curjoin=c.link
 			else:
 				time.sleep(times[3])
 		else:
-			if join == 1:
+			if join == True:
 				count=0
 				endc=False
 				while count <=2 and endc == False:
@@ -244,31 +246,23 @@ def attendclass(tt):
 					count=count+1
 					endc=(not checkwindow(curjoin))
 			curjoin=""
-			join==0
+			join=False
 			if(c==None):
-				end=1
+				end=True
 	
-#loop which sleeps for times seconds and checks for classes to attend till time_now < dayendtime
-def checkloop(tt,dt):
-	nowd=datetime.now()
-	timet=nowd.time()
-	first=True
-	while first==True or timet<dt:
-		first=False
-		attendclass(tt)
-		time.sleep(times[3])
-		nowd=datetime.now()
-		timet=nowd.time()
-
+#loop which sleeps for times seconds and checks for classes to attend till daystarttime < time_now < dayendtime
 def initialize():
 	nowd=datetime.now()
 	timet=nowd.time()
 	f=True
 	while f==True:
+		nowd=datetime.now()
+		timet=nowd.time()
 		if (timet>ds and timet<dt):
-			checkloop(p,dt)
+			attendclass(p)
+			time.sleep(times[3])
 		elif timet<dt :
-			time.sleep(times[4])
+			time.sleep(times[3])
 		else:
 			print("CONGRATULATIONS. YOUR DAY HAS ENDED")
 			f=False
