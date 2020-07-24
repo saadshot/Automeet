@@ -14,7 +14,7 @@ add_to_url = "?authuser=2"	#find this parameter in url at meet homepage and set 
 xp=['CS301']	#extra parameters to find in window title to get window_id
 ttpath="timetable.txt"	#text file with timetable
 daystarttime="07:59"	#defines day start time to not have entire program run before 08:00AM
-dayendtime="13:50"	#when do all classes end, to stop program
+dayendtime="17:00"	#when do all classes end, to stop program
 
 
 '''	gets screen resolution, 
@@ -23,7 +23,7 @@ user32 = ctypes.windll.user32
 user32.SetProcessDPIAware()
 
 #wait times for sleep in check loop
-times=[10,20,60,20,900]
+times=[10,20,60,600,900]
 
 #simple exception class
 class MeetException(RuntimeError):
