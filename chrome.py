@@ -10,11 +10,11 @@ from datetime import datetime,date
 import notif
 import ctypes
 
-add_to_url = "?authuser=2"	#find this parameter in url at meet homepage and set it accordingly
+add_to_url = "?authuser=1"	#find this parameter in url at meet homepage and set it accordingly
 xp=['CS301']	#extra parameters to find in window title to get window_id
 ttpath="timetable.txt"	#text file with timetable
 daystarttime="07:59"	#defines day start time to not have entire program run before 08:00AM
-dayendtime="17:00"	#when do all classes end, to stop program
+dayendtime="17:30"	#when do all classes end, to stop program
 
 
 '''	gets screen resolution, 
@@ -68,6 +68,7 @@ def gethwnd(hwnds,meetid):
 	raises exceptions if browser not started or
 	window not found'''
 def open_browser_window(c):
+
 	si = subprocess.STARTUPINFO()
 	si.wShowWindow=win32con.SW_SHOWMAXIMIZED
 	si.dwFlags = subprocess.CREATE_NEW_CONSOLE | subprocess.STARTF_USESHOWWINDOW
@@ -141,26 +142,36 @@ def joinclass():
 	pyautogui.moveTo(user32.GetSystemMetrics(0)/2,0) #moving cursor out of the way due to image recognition
 	cc=[]	#click coordinates
 	cc.append(pyautogui.locateOnScreen('join2.png'))
-	cc.append(pyautogui.locateOnScreen('cam_on.png'))
+	cc.append(pyautogui.locateOnScreen('cam_on2.png'))
 	cc.append(pyautogui.locateOnScreen('meetlogo.png'))
 	cc.append(pyautogui.locateOnScreen('mic_unmuted.png'))
 	if(cc[0]!=None):
 		for i in cc:
 			if i != None:
 				i=pyautogui.center(i)
+		pyautogui.hotkey('ctrl', 'e')
+		time.sleep(1)
+		pyautogui.hotkey('ctrl', 'd')
 		if(cc[2]!=None):
 			pyautogui.rightClick(cc[2])
 			cc.append(pyautogui.locateOnScreen('mutesite.png'))
 			if(cc[4] != None):
 				cc[4]=pyautogui.center(cc[4])
 				pyautogui.click(cc[4])
-		if(cc[1]!=None):
+		'''if(cc[1]!=None):
 			pyautogui.click(cc[1])
 		if(cc[3]!=None):
-			pyautogui.click(cc[3])
+			pyautogui.click(cc[3])'''
 		pyautogui.click(cc[0])
 		pyautogui.moveTo(user32.GetSystemMetrics(0)/2,0)
-		
+		time.sleep(2)
+		jo=[]
+		jo.append(pyautogui.locateOnScreen('recorded.png'))
+		if (jo[0]!=None):
+			jo.append(pyautogui.locateOnScreen('join_recorded'))
+			if (jo[1]!=None):
+				jo[1]=pyautogui.center(jo[1])
+				pyautogui.click(jo[1])
 	else:
 		raise MeetException("Unable to find join")
 
