@@ -1,6 +1,5 @@
 # automeet
 
-# created by BAZ
 AUTOMEET is designed to allow a logged in Google user to automatically attend google meet meetings. Primarily to be used to personal college lectures, it has an extensible timetable file which can be used to input various meet links and times, along with days.
 
 This script uses image recognition and emulates human input using pyautogui and win32api. 
